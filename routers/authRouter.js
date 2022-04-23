@@ -38,14 +38,15 @@ async function postSignUp(req, res) {
 }
 
 async function LogInUser(req, res) {
-    console.log('enter login');
     let data = req.body;
+    console.log(data.email + data.password);
     if (data.email) {
         let user = await userModel.findOne({ email: data.email });
         try {
             if (user) {
                 // bycript->compare
                 if (user.password == data.password) {
+                    res.cookie('isLoggedIn', true, {httpOnly:true});
                     return res.json({
                         message: 'User has logged in',
                         userDetails: data,
@@ -53,7 +54,7 @@ async function LogInUser(req, res) {
                 }
                 else {
                     return res.json({
-                        message: 'worng credential'
+                        message: 'wrong credential'
                     })
                 }
             }
@@ -66,7 +67,7 @@ async function LogInUser(req, res) {
     }
     else {
         return res.json({
-            message:'enter correct email',
+            message:'please enter email',
         })
     }
 }
