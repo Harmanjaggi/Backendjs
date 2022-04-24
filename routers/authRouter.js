@@ -1,7 +1,8 @@
 const express = require('express');
 var authRouter = express.Router();
 const userModel = require('../models/usermodel');
-
+const jwt = require('jsonwebtoken');
+const JWT_Key = require('secret.js');
 authRouter
     .route('/signup')
     .get(middleware1, getSignUp, middleware2)
@@ -39,14 +40,16 @@ async function postSignUp(req, res) {
 
 async function LogInUser(req, res) {
     let data = req.body;
-    console.log(data.email + data.password);
     if (data.email) {
         let user = await userModel.findOne({ email: data.email });
         try {
             if (user) {
                 // bycript->compare
                 if (user.password == data.password) {
-                    res.cookie('isLoggedIn', true, {httpOnly:true});
+                    let uid = user['_id'];
+                    let token = jwt.sign({ payload: uid }, JWT_Key)
+                    console.log(token);
+                    res.cookie('login', token, { httpOnly: true });
                     return res.json({
                         message: 'User has logged in',
                         userDetails: data,
