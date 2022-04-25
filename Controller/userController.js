@@ -1,59 +1,92 @@
 const userModel = require('../models/usermodel');   
 
-modeule.exports.getUser = async function getUsers(req, res) {
-    let allUsers = await userModel.find();
-    res.json({
-        message: 'list of all users',
-        data: allUsers
-    });
-    // res.send(users);
+modeule.exports.getUser = async function getUser(req, res) {
+    let id = req.params.id;
+    let user = await userModel.findById();
+    if (user) {
+        return res.json(users);
+    }
+    else {
+        return res.json({
+            message: 'user not found'
+        });
+    }
 }
 
-modeule.exports.postUser = function postUser(req, res) {
-    console.log(req.body);
-    users = req.body;
-    res.json({
-        message: "data received successfully",
-        user: req.body  
-    })
-}
+// modeule.exports.postUser = function postUser(req, res) {
+//     console.log(req.body);
+//     users = req.body;
+//     res.json({
+//         message: "data received successfully",
+//         user: req.body  
+//     })
+// }
 
 modeule.exports.updateUser = async function updateUser(req, res) {
-    console.log('req.body-> ', req.body);
-    let datatoBeUpdated = req.body;
-    let user = await userModel.findOneAndUpdate({email:'abc@gmail.com', datatoBeUpdated});
-    // for (key in datatoBeUpdated) {
-    //     users[key] = datatoBeUpdated[key];
-    // }
-    res.json({
-        message: "data updated successfully",
-        data: user
-    })
+    // console.log('req.body-> ', req.body);
+
+    try {
+        let id = req.params.id;
+        let datatoBeUpdated = req.body;
+        let user = await userModel.findById(id);
+
+        if (user) {
+            const keys = [];
+            for (let key in datatoBeUpdated)
+                keys.push(key);
+
+            for (let i = 0; i < keys.length; i++)
+                user[keys[i]] = datatoBeUpdated[keys[i]];
+            const updatedData = await user.save();
+            res.json({
+                message: "data updated successfully",
+                data: user
+            })
+        }
+        else {
+            res.json({
+                message: "data not found",
+            })
+        }
+    } catch (err) {
+        res.json({
+            message: err.message
+        })
+    }
 }
 
 modeule.exports.deleteUser = async function deleteUser(req, res) {
-    // users = {};
-    let dataToBeDeleted = req.body;
-    let user = await userModel.findOneAndDelete(dataToBeDeleted);
-    res.json({
-        message: "data has been deleted",
-        data: user
-    });
+    try {
+        let id = req.params.id;
+        let user = await userModel.
+            findByIdAndDelete(id);
+        if(user)
+        res.json({
+            message: "data has been deleted",
+            data: user
+        });
+        else
+        res.json({
+            message: "data not found"
+        }); 
+    } catch (err) {
+        res.json({
+            message: err.message
+        });
+    }
 }
 
-modeule.exports.getUserById = function getUserById(req, res) {
-    console.log(req.params.id);
-    let paramId = req.params.id;
-    let obj = {};
-    for (let i = 0; i < users.length; i++) {
-        if (users[i] ['id'] == paramId){
-            obj = users[i];
-        }
-    }
+modeule.exports.getAllUser = function getAllUser(req, res) {
+    let users = await userModel.find();
+    if (users) 
+        res.json({
+            message: 'users retrieved',
+            data: users
+        });
+    else 
     res.json({
-        message: "req received",
-        data:obj
-    })
+        message: 'users not found',
+    });
 }
 
 // function setCookies(req, res) {

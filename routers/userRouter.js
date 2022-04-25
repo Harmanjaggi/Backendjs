@@ -1,27 +1,42 @@
 const express = require('express');
 var userRouter = express.Router(); 
 const protectRouter = require('./authHelper');
-const { getUsers, getUserById, updateUser, deleteUser, postUser} = require('../Controller/userController')
+const { getUsers, getAllUser, updateUser, deleteUser} = require('../Controller/userController');
+const { application } = require('express');
 
-userRouter
-    .route('/')
-    .get(protectRouter, getUsers)
-    .post(postUser)
+// user options
+userRouter.route('/:id')
     .patch(updateUser)
-    .delete(deleteUser)
+    .delete(deleteUser);
 
+//profile page
+app.use(protectRouter);
 userRouter
-    .route("/getCookies")
-    .get(getCookies);
+    .route('/userprofile')
+    .get(getUsers);
 
-userRouter
-    .route("/setCookies")
-    .get(setCookies);
+//admin specific
+app.use(isAuthorised(['admin']));
+userRoute.route('')
+    .get(getAllUser);
 
-userRouter
-    .route('/:id')
-    .get(getUserById);
+// userRouter
+//     .route('/')
+//     .get(protectRouter, getUsers)
+//     .post(postUser)
+//     .patch(updateUser)
+//     .delete(deleteUser)
 
+// userRouter
+//     .route("/getCookies")
+//     .get(getCookies);
 
+// userRouter
+//     .route("/setCookies")
+//     .get(setCookies);
+
+// userRouter
+//     .route('/:id')
+//     .get(getUserById);
 
 module.exports = userRouter;
