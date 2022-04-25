@@ -1,2 +1,3 @@
-module.exports.JWT_Key = 'zhyxhgfvbnkcxdf'
-// need to verify
+module.exports = {
+    'JWT_Key' : 'zhyxhgfvbnkcxdf'
+}

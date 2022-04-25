@@ -1,8 +1,9 @@
 const userModel = require('../models/usermodel');   
 
-modeule.exports.getUser = async function getUser(req, res) {
+module.exports.getUser = async function getUser(req, res) {
     let id = req.params.id;
-    let user = await userModel.findById();
+    console.log(id);
+    let user = await userModel.findById(id);
     if (user) {
         return res.json(users);
     }
@@ -13,7 +14,7 @@ modeule.exports.getUser = async function getUser(req, res) {
     }
 }
 
-// modeule.exports.postUser = function postUser(req, res) {
+// module.exports.postUser = function postUser(req, res) {
 //     console.log(req.body);
 //     users = req.body;
 //     res.json({
@@ -22,7 +23,7 @@ modeule.exports.getUser = async function getUser(req, res) {
 //     })
 // }
 
-modeule.exports.updateUser = async function updateUser(req, res) {
+module.exports.updateUser = async function updateUser(req, res) {
     // console.log('req.body-> ', req.body);
 
     try {
@@ -55,7 +56,7 @@ modeule.exports.updateUser = async function updateUser(req, res) {
     }
 }
 
-modeule.exports.deleteUser = async function deleteUser(req, res) {
+module.exports.deleteUser = async function deleteUser(req, res) {
     try {
         let id = req.params.id;
         let user = await userModel.
@@ -76,7 +77,7 @@ modeule.exports.deleteUser = async function deleteUser(req, res) {
     }
 }
 
-modeule.exports.getAllUser = function getAllUser(req, res) {
+module.exports.getAllUser = async function getAllUser(req, res) {
     let users = await userModel.find();
     if (users) 
         res.json({
@@ -96,7 +97,7 @@ modeule.exports.getAllUser = function getAllUser(req, res) {
 //     res.send('cookies has been set');
 // }
 
-modeule.exports.getCookies = function getCookies(req, res) {
+function getCookies(req, res) {
     let cookies = req.cookies;
     console.log(cookies);
     res.send('cookies received');
