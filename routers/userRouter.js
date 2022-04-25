@@ -15,6 +15,8 @@ userRouter.route('/signup')
 userRouter.route('/login')
     .post(logIn);
 
+// userRouter
+
 //profile page
 userRouter.use(protectRouter); 
 userRouter.route('/userProfile')

@@ -1,11 +1,11 @@
 const userModel = require('../models/usermodel');   
 
 module.exports.getUser = async function getUser(req, res) {
-    let id = req.params.id;
+    let id = req.id;
     console.log(id);
     let user = await userModel.findById(id);
     if (user) {
-        return res.json(users);
+        return res.json(user);
     }
     else {
         return res.json({
@@ -29,7 +29,7 @@ module.exports.updateUser = async function updateUser(req, res) {
     try {
         let id = req.params.id;
         let datatoBeUpdated = req.body;
-        let user = await userModel.findById(id);
+        let user = await userModel.findByIdAndUpdate(id);
 
         if (user) {
             const keys = [];
