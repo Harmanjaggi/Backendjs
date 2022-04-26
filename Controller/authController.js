@@ -92,11 +92,66 @@ module.exports.protectRouter = async function protectRouter(req, res, next) {
                 });
         }
         else
+        {
+            //browser
+            const client = req.get('User-Agent');
+            if (client.includes("Mozilla") == true) {
+                return res.redirect('/login');
+            }
+            // postman
             return res.json({
                 message: 'please login first'
             });
+        }
     }
     catch (e) {
         res.json({message: e.message})
     }
+}
+
+module.exports.forgetPassword = async function forgetPassword(req, res) {
+    let { emailv } = req.body; // taking email from req.body
+    try {
+        const user = await userModel.findOne({ email: emailv });
+        if(user) {
+            const resetToken = user.createResetToken();
+            // http://abc.com/resetpassword/resettoken
+            let resetPasswordLink = "${req.protocol}://${req.get('host')}/resetpassword/${resetToken}";
+            // send email to the user
+            //nodemailer
+        }
+        else {
+            return res.json({message:"please signup"});
+        }
+    } catch (e) {
+        res.status(500).json({ message:e.message });
+    }
+}
+
+module.exports.resetPassword = async function resetPassword(req, res) {
+    try {
+        const token = req.params.token;
+        let { password, confirmPassword } = req.body;
+        const user = await userModel.findOne({ resetToken: token });
+        if (user) {
+            user.resetPasswordHandler(password, confirmPassword);
+            await user.save();
+            res.json({
+                message: "password change successfully, please try again"
+            })
+        }
+        else {
+
+        }
+    }
+    catch (e) {
+        res.json({ message:e.message });
+    }
+}
+
+module.exports.logout = function logout(req, res) {
+    res.cookie('login', '', { maxAge: 1 });
+    res.json({
+        message: "user logged out successfully"
+    });
 }
