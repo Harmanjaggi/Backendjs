@@ -8,3 +8,5 @@ app.listen(3000);
 
 const userRouter = require('./routers/userRouter');
 app.use('/user', userRouter);
+
+const planmodel = require('./models/planModel')

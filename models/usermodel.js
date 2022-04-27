@@ -63,6 +63,8 @@ userSchema.pre('save', function () {
     this.confirmPassword = undefined;
 })
 
+const userModel = mongoose.model('userModel', userSchema);
+
 // userSchema.pre('save', async function () {
 //     let salt = await bcrypt.genSalt();
 //     let hashedString = await bcrypt.hash(this.password, salt);
@@ -84,8 +86,5 @@ userSchema.methods.resetPasswordHandler = function (password, confirmPassword) {
     this.confirmPassword = confirmPassword;
     this.resetToken = undefined;
 }
-
-
-const userModel = mongoose.model('userModel', userSchema);
 
 module.exports = userModel;
