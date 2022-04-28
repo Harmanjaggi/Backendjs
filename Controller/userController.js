@@ -83,7 +83,7 @@ module.exports.getAllUser = async function getAllUser(req, res) {
         res.json({
             message: 'users retrieved',
             data: users
-        });
+        }); 
     else 
     res.json({
         message: 'users not found',
@@ -101,4 +101,10 @@ function getCookies(req, res) {
     let cookies = req.cookies;
     console.log(cookies);
     res.send('cookies received');
+}
+
+module.exports.updateProfileImage = function updateProfileImage(req, res) {
+    res.json({
+        message: 'file uploaded successfully'
+    });
 }
