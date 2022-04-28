@@ -1,9 +1,7 @@
-const express = require('express');
 const userModel = require('../models/usermodel');
 const jwt = require('jsonwebtoken');
 const secret = require('../secret');
 const JWT_Key = secret.JWT_Key;;
-const { findById } = require('../models/usermodel');
 
 module.exports.signup = async function signup(req, res) {
     try{let dataObj = req.body;
@@ -66,11 +64,13 @@ module.exports.logIn = async function login(req, res) {
 
 module.exports.isAuthorised = function isAuthorised(role) {
     return function (req, res, next) {
-        if (role.include(req.role) == true)
-            next();
-        else {
-            res.status(401).json({ message: "operation is not allowed" });
-        }
+        for (let r = 0; r < role.length; r++) 
+            if (role[r] == req.role)
+                return next();
+        
+        // if (role.include(req.role) == true)
+        //     next();
+        res.status(401).json({ message: "operation is not allowed" });
     }
 }
 

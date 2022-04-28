@@ -2,8 +2,7 @@
 
 const { default: mongoose } = require('mongoose');
 const mongoos = require('mongoose')
-const emailValidator = require("email-validator");
-const createApplication = require('express/lib/express');
+
 
 const db_link = 'mongodb+srv://admin:fjVylMbdhjwAeiks@cluster0.tou3g.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 
@@ -16,7 +15,7 @@ mongoos.connect(db_link)
         console.log(err);
     });
 
-const planschema = mongoos.Schema({
+const planSchema = mongoos.Schema({
     name: {
         type: String,
         required: [true, 'enter value'],
@@ -43,21 +42,21 @@ const planschema = mongoos.Schema({
 });
 
 // model
-const planModel = mongoose.model('planModel', planschema);
+const planModel = mongoose.model('planModel', planSchema);
 
-(async function createPlan() {
-    let = plabObj = {
-        name: 'SuperFood',
-        duration: 30,
-        price: 1000,
-        ratingsAverage: 5,
-        discount: 20
-    }
-    let data = await planModel.create(plabObj);
-    console.log(data);
+// (async function createPlan() {
+//     let plabObj = {
+//         name: 'SuperFoood6',
+//         duration: 30,
+//         price: 1000,
+//         ratingsAverage: 5,
+//         discount: 20
+//     }
+//     let data = await planModel.create(plabObj);
+//     console.log(data);
 
-    // const doc = new planModel(planObj);
-    // await doc.save();
-})();
+//     // const doc = new planModel(planObj);
+//     // await doc.save();
+// })();
 
 module.exports = planModel;

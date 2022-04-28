@@ -24,21 +24,21 @@ module.exports.getUser = async function getUser(req, res) {
 // }
 
 module.exports.updateUser = async function updateUser(req, res) {
-    // console.log('req.body-> ', req.body);
-
     try {
         let id = req.params.id;
-        let datatoBeUpdated = req.body;
-        let user = await userModel.findByIdAndUpdate(id);
-
+        let dataToBeUpdated = req.body;
+        let user = await userModel.findById(id);
+        console.log(user);
         if (user) {
-            const keys = [];
-            for (let key in datatoBeUpdated)
-                keys.push(key);
+            for (let key in dataToBeUpdated)
+                user[key] = dataToBeUpdated[key];
+            // const keys = [];
+            // for (let key in dataToBeUpdated)
+            //     keys.push(key);
 
-            for (let i = 0; i < keys.length; i++)
-                user[keys[i]] = datatoBeUpdated[keys[i]];
-            const updatedData = await user.save();
+            // for (let i = 0; i < keys.length; i++)
+            //     user[keys[i]] = dataToBeUpdated[keys[i]];
+            await user.save();
             res.json({
                 message: "data updated successfully",
                 data: user

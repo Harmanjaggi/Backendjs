@@ -59,9 +59,9 @@ userSchema.post('save', function (doc) {
     console.log('after saving in db', doc);
 })
 
-userSchema.pre('save', function () {
-    this.confirmPassword = undefined;
-})
+// userSchema.pre('save', function () {
+//     this.confirmPassword = undefined;
+// })
 
 const userModel = mongoose.model('userModel', userSchema);
 

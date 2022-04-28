@@ -5,7 +5,7 @@ const { signup, logIn: logIn, isAuthorised, protectRouter, logout, forgetPasswor
 const { application } = require('express');
 
 // user options
-userRouter.route('/id')
+userRouter.route('/:id')
     .patch(updateUser)
     .delete(deleteUser);
 
@@ -20,6 +20,7 @@ userRouter.route('/forgetpassword')
 
 userRouter.route('/forgetpassword/:token')
     .post(resetPassword); 
+    
 userRouter.route('/logout')
     .get(logout);
 
