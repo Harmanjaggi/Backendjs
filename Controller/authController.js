@@ -110,15 +110,18 @@ module.exports.protectRouter = async function protectRouter(req, res, next) {
 }
 
 module.exports.forgetPassword = async function forgetPassword(req, res) {
-    let { emailv } = req.body; // taking email from req.body
+    let { email } = req.body; // taking email from req.body
+    console.log({ email });
     try {
-        const user = await userModel.findOne({ email: emailv });
+        const user = await userModel.findOne({ email: email });
         if(user) {
-            const resetToken = user.createResetToken();
+            const resetToken = user.createResetToken;
             // http://abc.com/resetpassword/resettoken
             let resetPasswordLink = "${req.protocol}://${req.get('host')}/resetpassword/${resetToken}";
             // send email to the user
             //nodemailer
+            console.log(resetToken);
+            res.json({message: resetToken})
         }
         else {
             return res.json({message:"please signup"});

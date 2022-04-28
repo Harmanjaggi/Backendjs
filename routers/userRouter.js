@@ -15,10 +15,10 @@ userRouter.route('/signup')
 userRouter.route('/login')
     .post(logIn);
 
-userRouter.route('/forgetpassword')
+userRouter.route('/forgetPassword')
     .post(forgetPassword);
 
-userRouter.route('/forgetpassword/:token')
+userRouter.route('/forgetPassword/:token')
     .post(resetPassword); 
     
 userRouter.route('/logout')

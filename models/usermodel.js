@@ -8,7 +8,6 @@ const db_link = 'mongodb+srv://admin:fjVylMbdhjwAeiks@cluster0.tou3g.mongodb.net
 
 mongoos.connect(db_link)
     .then(function (db) {
-        // console.log(db);
         console.log('db connect');
     })
     .catch(function (err) {

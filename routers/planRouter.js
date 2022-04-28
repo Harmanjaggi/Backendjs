@@ -1,7 +1,7 @@
 const express = require('express');
 var planRouter = express.Router(); 
 const { protectRouter, isAuthorised } = require('../controller/authController');
-const { getAllPlans, getPlan, createPlan, deletePlan, updatePlan, top3Plans} = require('../controller/plancontroller');
+const { getAllPlans, getPlan, createPlan, deletePlan, updatePlan, top3Plans} = require('../controller/planController');
 
 planRouter.route('/allPlans')
     .get(getAllPlans);
