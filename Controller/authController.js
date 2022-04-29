@@ -7,7 +7,7 @@ const JWT_Key = secret.JWT_Key;;
 module.exports.signup = async function signup(req, res) {
     try{let dataObj = req.body;
         let user = await userModel.create(dataObj);
-        sendMail("signup", user);
+        // sendMail("signup", user);
     if(user)
     res.json({
         message: "user is signed up",
