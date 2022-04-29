@@ -1,11 +1,13 @@
 const userModel = require('../models/usermodel');
 const jwt = require('jsonwebtoken');
+const { sendMail } = require("../utility/nodemailer")
 const secret = require('../secret');
 const JWT_Key = secret.JWT_Key;;
 
 module.exports.signup = async function signup(req, res) {
     try{let dataObj = req.body;
-    let user = await userModel.create(dataObj);
+        let user = await userModel.create(dataObj);
+        sendMail("signup", user);
     if(user)
     res.json({
         message: "user is signed up",
